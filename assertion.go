@@ -36,9 +36,8 @@ type AssertionService struct {
 	Counter   uint32
 }
 
-func (service *AssertionService) Verify(assertObject *AssertionObject, challenge string, clientData []byte) (uint32, error) {
-	// 1. Compute clientDataHash as the SHA256 hash of clientData.
-	clientDataHash := sha256.Sum256(clientData)
+func (service *AssertionService) Verify(assertObject *AssertionObject, challenge string, clientDataHash []byte) (uint32, error) {
+	// clientDataHash is the hash of clientData.
 
 	// 2. Concatenate authenticatorData and clientDataHash, and apply a SHA256 hash over the result to form nonce.
 	nonce := sha256.Sum256(append(assertObject.AuthData, clientDataHash[:]...))
